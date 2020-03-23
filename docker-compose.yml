@@ -1,14 +1,14 @@
 # Go back to an older compose format version due to a bug
 # where 'runtime' is available in version 2.3 but not 3
 #   https://github.com/docker/compose/issues/6239
-version: '2.3'
+version: "3"
 services:
   mongodb:
     image: mongo:3.6
     networks:
       - hc
     volumes:
-        - mongodb.hc:/data/db
+      - mongodb.hc:/data/db
 
   girder:
     image: kitware/hpccloud:girder
@@ -45,7 +45,7 @@ services:
     depends_on:
       - rabbitmq
     environment:
-     - GIRDER_PORT=8080
+      - GIRDER_PORT=8080
 
   monitor:
     image: kitware/hpccloud:celery-pyfr
@@ -61,7 +61,7 @@ services:
     depends_on:
       - rabbitmq
     environment:
-     - GIRDER_PORT=8080
+      - GIRDER_PORT=8080
 
   rabbitmq:
     image: rabbitmq
@@ -87,7 +87,7 @@ services:
       context: .
       dockerfile: docker/apache/Dockerfile
     volumes:
-     - pvw.hc:/pvw
+      - pvw.hc:/pvw
     networks:
       - hc
     ports:
@@ -115,7 +115,7 @@ services:
       dockerfile: docker/compute-pyfr/Dockerfile
     hostname: compute
     volumes:
-     - scratch.hc:/scratch
+      - scratch.hc:/scratch
     networks:
       - hc
     ports:
@@ -128,7 +128,7 @@ services:
       dockerfile: docker/visualize-osmesa/Dockerfile
     hostname: visualize
     volumes:
-     - scratch.hc:/scratch
+      - scratch.hc:/scratch
     networks:
       - hc
     ports:
@@ -137,6 +137,8 @@ services:
 
 networks:
   hc:
+    # external:
+    #   name: hpccloud-kemsu
 
 volumes:
   pvw.hc:
